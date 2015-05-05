@@ -15,7 +15,7 @@ defmodule MapDiffEx do
 
   defp do_diff(list1, list2) when is_list(list1) and is_list(list2) do
     case length(list1) == length(list2) do
-      false -> {list1, list2}
+      false -> %{:was => list1, :now => list2}
       true  -> (0..length(list1)-1)
                |> Enum.map(fn(i) ->
                  do_diff(Enum.at(list1, i), Enum.at(list2, i))
@@ -24,7 +24,7 @@ defmodule MapDiffEx do
   end
 
   defp do_diff(value1, value2) do
-    {value1, value2}
+    %{:was => value1, :now => value2}
   end
 
   defp to_map(list), do: Dict.merge(%{}, list)
